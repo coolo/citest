@@ -67,7 +67,7 @@ pipelines:
             resources:
             - leaper
             tasks:
-            - script: /usr/bin/osrt-manager_42 -A https://api.suse.de -c /etc/openSUSE-release-tools/manager_42/SUSE:SLE-15-SP1:GA.yml
+            - script: python3 /usr/bin/osrt-manager_42 -A https://api.suse.de -c /etc/openSUSE-release-tools/manager_42/SUSE:SLE-15-SP1:GA.yml
   SLE.Repochecker:
     group: SLE.Checkers
     lock_behavior: unlockWhenFinished
