@@ -107,7 +107,7 @@ pipelines:
             resources:
             - leaper
             tasks:
-            - script: python3 /usr/bin/osrt-leaper -A https://api.suse.de --group=leaper --user=leaper --verbose --manual-version-updates --manual-maintenance-updates review
+            - script: /usr/bin/osrt-leaper -A https://api.suse.de --group=leaper --user=leaper --verbose --manual-version-updates --manual-maintenance-updates review
   SLE.Staging.Bot.Regular:
     group: SLE.Checkers
     lock_behavior: unlockWhenFinished
@@ -212,52 +212,11 @@ pipelines:
         approval:
           type: manual
         jobs:
-          Run.A:
+<% %w(A B C D H S V Y).each do |letter| -%>
+          Run.<%= letter %>:
             timeout: 0
             resources:
             - repo-checker
             tasks:
-            - script: ./staging-installcheck.py -d -p SUSE:SLE-12-SP5:GA -A https://api.suse.de -s A
-          Run.B:
-            timeout: 0
-            resources:
-            - repo-checker
-            tasks:
-            - script: ./staging-installcheck.py -d -p SUSE:SLE-12-SP5:GA -A https://api.suse.de -s B
-          Run.C:
-            timeout: 0
-            resources:
-            - repo-checker
-            tasks:
-            - script: ./staging-installcheck.py -d -p SUSE:SLE-12-SP5:GA -A https://api.suse.de -s C
-          Run.D:
-            timeout: 0
-            resources:
-            - repo-checker
-            tasks:
-            - script: ./staging-installcheck.py -d -p SUSE:SLE-12-SP5:GA -A https://api.suse.de -s D
-          Run.H:
-            timeout: 0
-            resources:
-            - repo-checker
-            tasks:
-            - script: ./staging-installcheck.py -d -p SUSE:SLE-12-SP5:GA -A https://api.suse.de -s H
-          Run.S:
-            timeout: 0
-            resources:
-            - repo-checker
-            tasks:
-            - script: ./staging-installcheck.py -d -p SUSE:SLE-12-SP5:GA -A https://api.suse.de -s S
-          Run.V:
-            timeout: 0
-            resources:
-            - repo-checker
-            tasks:
-            - script: ./staging-installcheck.py -d -p SUSE:SLE-12-SP5:GA -A https://api.suse.de -s V
-          Run.Y:
-            timeout: 0
-            resources:
-            - repo-checker
-            tasks:
-            - script: ./staging-installcheck.py -d -p SUSE:SLE-12-SP5:GA -A https://api.suse.de -s Y
-
+            - script: ./staging-installcheck.py -d -p SUSE:SLE-12-SP5:GA -A https://api.suse.de -s <%= letter %>
+<% end %>
