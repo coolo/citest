@@ -1,0 +1,12 @@
+[Unit]
+Description=Go Agent
+Requires=docker.service
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStart=/usr/bin/docker run --rm -h go-agent-stagingbot-%i -e GO_SERVER_URL=https://botmaster.suse.de:8154/go -e AGENT_AUTO_REGISTER_KEY=75a7b26d-fc5e-4ccf-88c9-cbf61afc7ebb -v /srv/go-config:/home/go/config --name go-agent-stagingbot-%i -e AGENT_AUTO_REGISTER_RESOURCES=staging-bot gocd-agent-tumbleweed-release-tools
+ExecStop=/usr/bin/docker stop go-agent-stagingbot-%i
+
+[Install]
+WantedBy=multi-user.target

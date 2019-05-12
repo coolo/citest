@@ -1,0 +1,12 @@
+[Unit]
+Description=Go Agent
+Requires=docker.service
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStart=/usr/bin/docker run --rm -h go-agent-leaper-%i --name go-agent-leaper-%i -e GO_SERVER_URL=https://botmaster.suse.de:8154/go  -e AGENT_AUTO_REGISTER_KEY=75a7b26d-fc5e-4ccf-88c9-cbf61afc7ebb -v /srv/go-config:/home/go/config -v /etc/openSUSE-release-tools/manager_42/:/etc/openSUSE-release-tools/manager_42/ -e AGENT_AUTO_REGISTER_RESOURCES=leaper registry.opensuse.org/opensuse/tools/images/containers_tumbleweed/gocd-agent-release-tools:latest
+ExecStop=/usr/bin/docker stop go-agent-leaper-%i
+
+[Install]
+WantedBy=multi-user.target
